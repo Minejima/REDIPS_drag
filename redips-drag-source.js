@@ -295,6 +295,7 @@ REDIPS.drag = (function () {
 		for (i = 0; i < imgs.length; i++) {
 			REDIPS.event.add(imgs[i], 'mousemove', imgOnMouseMove);
 			REDIPS.event.add(imgs[i], 'touchmove', imgOnMouseMove);
+			REDIPS.event.add(imgs[i], 'pointermove', imgOnMouseMove);
 		}
 		// attach onscroll event to the window (needed for recalculating table cells positions)
 		REDIPS.event.add(window, 'scroll', calculateCells);
@@ -591,9 +592,11 @@ REDIPS.drag = (function () {
 		// activate onmousemove and ontouchmove event handlers on document object
 		REDIPS.event.add(document, 'mousemove', handlerOnMouseMove);
 		REDIPS.event.add(document, 'touchmove', handlerOnMouseMove);
+		REDIPS.event.add(document, 'pointermove', handlerOnMouseMove);
 		// activate onmouseup and ontouchend event handlers on document object
 		REDIPS.event.add(document, 'mouseup', handlerOnMouseUp);
 		REDIPS.event.add(document, 'touchend', handlerOnMouseUp);
+		REDIPS.event.add(document, 'pointerup', handlerOnMouseUp);
 		// get IE (all versions) to allow dragging outside the window (?!)
 		// http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
 		if (obj.setCapture) {
@@ -1082,9 +1085,11 @@ REDIPS.drag = (function () {
 		// detach mousemove and touchmove event handlers on document object
 		REDIPS.event.remove(document, 'mousemove', handlerOnMouseMove);
 		REDIPS.event.remove(document, 'touchmove', handlerOnMouseMove);
+		REDIPS.event.remove(document, 'pointermove', handlerOnMouseMove);
 		// detach mouseup and touchend event handlers on document object
 		REDIPS.event.remove(document, 'mouseup', handlerOnMouseUp);
 		REDIPS.event.remove(document, 'touchend', handlerOnMouseUp);
+		REDIPS.event.remove(document, 'pointerup', handlerOnMouseUp);
 		// detach dragContainer.onselectstart handler to enable select for IE7/IE8 browser 
 		dragContainer.onselectstart = null;
 		// reset object styles
@@ -1384,11 +1389,13 @@ REDIPS.drag = (function () {
 		if (flag === false) {
 			div.onmousedown = null;
 			div.ontouchstart = null;
+			div.onpointerdown = null;
 			div.ondblclick = null;
 		}
 		else {
 			div.onmousedown = handlerOnMouseDown;
 			div.ontouchstart = handlerOnMouseDown;
+			div.onpointerdown = handlerOnMouseDown;
 			div.ondblclick = handlerOnDblClick;
 		}
 	};
